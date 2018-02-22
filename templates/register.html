@@ -1,0 +1,50 @@
+{% extends "headerv.html" %}
+
+<!--
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+-->
+
+{% block main %}
+<br>
+<br>
+<br>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<br>
+
+  <div class="jumbotron">
+    <center>
+      <br>
+      <br>
+    <h4>Register</h4>
+    <br>
+    {% from "_formhelpers.html" import render_field %}
+    	<form method=post class="form-inline" action="/register/">
+        <dl>
+          {{render_field(form.username)}}
+          {{render_field(form.email)}}
+          {{render_field(form.password)}}
+          {{render_field(form.confirm)}}
+          {{render_field(form.accept_tos)}}
+        </dl>
+        <p><input class="btn btn-primary" type=submit value=Register>
+        </form>
+
+        {% if error %}
+          <p class="error"><strong></strong>{{error}}</p>
+        {% endif %}
+      </center>
+  </div>
+
+{% endblock %}

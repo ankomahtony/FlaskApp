@@ -1,0 +1,87 @@
+{% extends "headerv.html" %}
+
+{% block main %}
+<h4>This are some of things i have developed with matplotlib </h4>
+
+<br>
+
+<div class="container" style="max-width:1500px; min-height:100%">
+
+	<div class="row">
+	<!-- size 4 on a large screen, 12 on a small, 6 on a med -->
+		<div class="col-sm-6 col-md-4">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+                    <img class="responsive-img" src="{{url_for('static',filename='images/d1.png')}}" style="width:350px; height:300px;" controls="controls">
+                </div>
+				<div class="card-content">
+				  <p>Linear graph</p>
+				</div>
+            </div>
+        </div>
+
+		<div class="col-sm-6 col-md-4">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+                    <img class="responsive-img" src="{{url_for('static',filename='images/3d_scatter.png')}}" style="width:350px; height:300px;" controls="controls">
+                </div>
+				<div class="card-content">
+				  <p>3D Scatter Plot</p>
+				</div>
+            </div>
+        </div>
+
+		<div class="col-sm-6 col-md-4">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+                    <img class="responsive-img" src="{{url_for('static',filename='images/3dbar.png')}}" style="width:350px; height:300px;" controls="controls">
+                </div>
+				<div class="card-content">
+				  <p>3 Dimensional Bar Chart</p>
+				</div>
+            </div>
+        </div>
+		<div class="col-sm-6 col-md-4">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+                    <img class="responsive-img" src="{{url_for('static',filename='images/3dbarnz.png')}}" style="width:350px; height:300px;" controls="controls">
+                </div>
+				<div class="card-content">
+				  <p>3 Dimensional Bar Chart with number of Z</p>
+				</div>
+            </div>
+        </div>
+		<div class="col-sm-6 col-md-4">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+                    <img class="responsive-img" src="{{url_for('static',filename='images/stack.png')}}" style="width:350px; height:300px;" controls="controls">
+                </div>
+				<div class="card-content">
+				  <p>Stack graph</p>
+				</div>
+            </div>
+        </div>
+		<div class="col-sm-6 col-md-4">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+                    <img class="responsive-img" src="{{url_for('static',filename='images/pie.png')}}" style="width:350px; height:300px;" controls="controls">
+                </div>
+				<div class="card-content">
+				  <p>Pie graph</p>
+				</div>
+            </div>
+        </div>
+		<div class="col-sm-6 col-md-4">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+                    <img class="responsive-img" src="{{url_for('static',filename='images/3d1.png')}}" style="width:350px; height:300px;" controls="controls">
+                </div>
+				<div class="card-content">
+				  <p>3D graph</p>
+				</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

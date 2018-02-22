@@ -1,0 +1,55 @@
+{% extends "headerv.html" %}
+
+{% block main %}
+<br>
+<br>
+<br>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<!-- main content -->
+<div class="jumbotron">
+    <br>
+	<script>Materialize.toast('New phone, who dis?', 4000)</script>
+	<div class="container">
+      <h3>Please login:</h3>
+      <br>
+      <form action="" class="form-inline" method="post">
+      <label>Username:</label>
+        <input type="text" class="form-control" placeholder="Username" name="username" value="{{request.form.username}}">
+          <label>Password:</label>
+         <input type="password" class="form-control" placeholder="Password" name="password" value="{{request.form.psssword}}">
+        <input class="btn" type="submit" value="Login" style="background-color:#FFD166;color:#000">
+      </form>
+    <br>
+
+        <div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Country
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#">Ghana</a></li>
+    <li><a href="#">Asia</a></li>
+    <li><a href="#">Europe</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+</div>
+
+	<div class="container">
+	   <br><p>No account? <a href='/register'>Register here</a></p>
+	   <p><a href='/forgot-password/'>Forgot Password?</a></p>
+	   <br>
+        <div class="alert alert-danger" role="alert"><p>{{ error }}</p></div>
+	</div>
+	</div>
+</div>
+{% endblock %}

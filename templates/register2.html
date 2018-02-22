@@ -1,0 +1,39 @@
+{% extends "headerv.html" %}
+
+<!--
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+-->
+
+{% block main %}
+<div class="container-fluid">
+    <br>
+    <div class="jumbotron">
+		<h4>Register</h4>
+		<br>
+		<form method=post class="form-inline" action="/register/">
+			<dl>
+				<dt><label for="username">Username: </label>
+				<dd><input class="form-control" id="username" name="username" type="text" value="" placeholder="Full Name"></dd>
+				<dt><label for="email">Email Address: </label>
+				<dd><input class="form-control" id="email" name="email" type="text" value="" placeholder="example@gmail.com"></dd>
+
+				<dt><label for="password">Password: </label>
+				<dd><input class="form-control" id="password" name="password" type="password" value="" placeholder="********"></dd>
+				<dt><label for="confirm">Repeat Password: </label>
+				<dd><input class="form-control" id="confirm" name="confirm" type="password" value="" placeholder="*********"></dd>
+				<p>By registering, you accept the <a href="/about/tos" target="blank">Terms of Service</a> and <a href="/about/privacy-policy" target="blank">Privacy Notice</a></p>
+			</dl>
+			<p><input class="btn btn-primary" type=submit value=Register>
+		</form>
+
+		<div class="container">
+			<br>
+		</div>
+    </div>
+</div>
+
+{% endblock %}

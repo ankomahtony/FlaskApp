@@ -1,0 +1,268 @@
+{% extends "headerv.html" %}
+{% block main %}
+<script>
+  var w = window.innerWidth,
+    h = 300,
+    margin = { top: 40, right: 100, bottom: 20, left: 20 },
+    radius = 80;
+
+svg = d3.select("body").append("svg").attr({
+    width: w,
+    height: h
+});
+
+var dataset = [
+  { x: 50, y: 100 },
+  { x: 80, y: 100 },
+  { x: 110, y: 100 },
+  { x: 140, y: 100 },
+  { x: 170, y: 100 },
+  { x: 200, y: 100 },
+  { x: 230, y: 100 },
+  { x: 260, y: 100 },
+  { x: 290, y: 100 },
+  { x: 320, y: 100 }
+];
+
+var xScale = d3.scale.linear()
+  .domain([0, d3.max(dataset, function (d) {return d.x;}) + 10])
+  .range([margin.left, w - margin.right]);
+
+  var yScale = d3.scale.linear()
+    .domain([0, d3.max(dataset, function (d) {return d.y;}) + 10])
+    .range([margin.top, h - margin.bottom]);
+
+
+var circleInitAttrs = {
+  cx: function(d){ return xScale(d.x);},
+  cy: function(d){ return yScale(d.y);},
+  r: 0.5,
+  fill: "green"
+};
+
+var circleAttrs = {
+  cx: function(d){ return xScale(d.x);},
+  cy: function(d){ return yScale(d.y)-180;},
+  r: radius,
+  fill: "green"
+};
+
+
+
+function handleMouseOver (d, i) {
+  d3.select(this).attr({
+    fill:"orange",
+    r: radius
+  });
+}
+
+
+function handleMouseOut (d, i){
+    d3.select(this).attr({
+      fill:"green",
+      r: radius
+      });
+      d3.select("#t" + d.x + "-" + d.y + "-" + i).remove();
+}
+
+var circles = svg.selectAll("circle")
+    .data(dataset)
+    .enter()
+    .append("circle")
+    .attr(circleInitAttrs)
+    .on("mouseover", handleMouseOver)
+    .on("mouseout", handleMouseOut);
+
+  var text = svg.append("text")
+      .attr({
+       x: 0,
+       y: 0
+       })
+       .attr("font-size","0.0em")
+       .text("HAPPY MERRY CHRISTMAS!!!");
+
+    text.transition()
+        .duration(3000)
+        .attr({
+       x: 700,
+       y: 110,
+       fill:"red"
+       })
+       .attr("text-anchor","middle")
+       .attr("font-size","4.0em");
+
+    circles.transition()
+        .duration(3000)
+        .attr(circleAttrs);
+
+
+    svg.on("click", function (){
+        var coords = d3.mouse(this);
+
+        var newDataset = {
+          x: Math.round(xScale.invert(coords[0])),
+          y: Math.round(yScale.invert(coords[1]))
+        };
+
+        dataset.push(newDataset);
+
+        xScale.domain([0, d3.max(dataset, function (d) { return d.x; }) + 10]);
+        yScale.domain([0, d3.max(dataset, function (d) { return d.y; }) + 10]);
+
+        xAxisGroup.transition().call(xAxis);
+        yAxisGroup.transition().call(yAxis);
+
+      var c =  svg.selectAll("circle").data(dataset)
+      c.transition()
+        .ease("elastic")
+        .attr(circleAttrs)
+      c.enter()
+      .append("circle")
+      .attr(circleInitAttrs)
+      .on("mouseover", handleMouseOver)
+      .on("mouseout", handleMouseOut);
+
+      c.transition()
+          .duration(2000)
+          .attr(circleAttrs);
+    });
+
+
+</script>
+{% endblock %}
+{% block videos %}
+<!--<link rel="stylesheet" href="/static/css/materialize.min.css">-->
+<!-- main content -->
+
+<br>
+<div class="alert alert-success" role="alert">You can download all your Favorite movies here</div>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+</div>
+<div class="container" style="max-width:1500px; min-height:100%">
+
+	<div class="row">
+	<!-- size 4 on a large screen, 12 on a small, 6 on a med -->
+		<div class="col-sm-6 col-md-4">
+			<a href="/data-analysis-tutorials/" class="waves-effect waves-light" style="color:#000">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+				  <video class="responsive-img" src="{{url_for('static',filename='video/1.mp4')}}" style="width:250px; height:200px;" controls="controls">
+				  <br><span class="card-title"><strong>Data Analysis</strong></span>s
+				</div>
+				<div class="card-content">
+				  <p>Learn how to use Python with Pandas, Matplotlib, and other modules to gather insights from and about your data.</p>
+				</div>
+				<div class="card-action right-align">
+				  <a href="{{url_for('static',filename='video/1.mp4')}}" class="waves-effect waves-light btn" style="color:#000000; background-color:#FFD166">Download</a>
+				</div>
+            </div>
+            </a>
+		</div>
+
+<div class="col-sm-6 col-md-4">
+			<a href="/data-analysis-tutorials/" class="waves-effect waves-light" style="color:#000">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+				  <video class="responsive-img" src="{{url_for('static',filename='video/2.mp4')}}" style="width:250px; height:200px;" controls="controls">
+				  <br><span class="card-title"><strong>Data Analysis</strong></span>
+				</div>
+				<div class="card-content">
+				  <p>Learn how to use Python with Pandas, Matplotlib, and other modules to gather insights from and about your data.</p>
+				</div>
+				<div class="card-action right-align">
+				  <a href="{{url_for('static',filename='video/2.mp4')}}" class="waves-effect waves-light btn" style="color:#000000; background-color:#FFD166">Download</a>
+				</div>
+            </div>
+            </a>
+		</div>
+
+
+		<div class="col-sm-6 col-md-4">
+			<a href="/data-analysis-tutorials/" class="waves-effect waves-light" style="color:#000">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+				  <video class="responsive-img" src="{{url_for('static',filename='video/3.mp4')}}" style="width:250px; height:200px;" controls="controls">
+				  <br><span class="card-title"><strong>Data Analysis</strong></span>
+				</div>
+				<div class="card-content">
+				  <p>Learn how to use Python with Pandas, Matplotlib, and other modules to gather insights from and about your data.</p>
+				</div>
+				<div class="card-action right-align">
+				  <a href="{{url_for('static',filename='video/3.mp4')}}" class="waves-effect waves-light btn" style="color:#000000; background-color:#FFD166">Download</a>
+				</div>
+            </div>
+            </a>
+		</div>
+
+		<div class="col-sm-6 col-md-4">
+			<a href="/data-analysis-tutorials/" class="waves-effect waves-light" style="color:#000">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+				  <video class="responsive-img" src="{{url_for('static',filename='video/4.mp4')}}" style="width:250px; height:200px;"  controls="controls">
+				  <br><span class="card-title"><strong>Data Analysis</strong></span>
+				</div>
+				<div class="card-content">
+				  <p>Learn how to use Python with Pandas, Matplotlib, and other modules to gather insights from and about your data.</p>
+				</div>
+				<div class="card-action right-align">
+				  <a href="{{url_for('static',filename='video/4.mp4')}}" class="waves-effect waves-light btn" style="color:#000000; background-color:#FFD166">Download</a>
+				</div>
+            </div>
+            </a>
+		</div>
+
+		<div class="col-sm-6 col-md-4">
+			<a href="/data-analysis-tutorials/" class="waves-effect waves-light" style="color:#000">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+				  <video class="responsive-img" src="{{url_for('static',filename='video/5.mp4')}}" style="width:250px; height:200px;" controls="controls">
+				  <br><span class="card-title"><strong>Data Analysis</strong></span>
+				</div>
+				<div class="card-content">
+				  <p>Learn how to use Python with Pandas, Matplotlib, and other modules to gather insights from and about your data.</p>
+				</div>
+				<div class="card-action right-align">
+				  <a href="{{url_for('static',filename='video/5.mp4')}}" class="waves-effect waves-light btn" style="color:#000000; background-color:#FFD166">Download</a>
+				</div>
+            </div>
+            </a>
+		</div>
+
+		<div class="col-sm-6 col-md-4">
+			<a href="/data-analysis-tutorials/" class="waves-effect waves-light" style="color:#000">
+			<div class="card-panel hoverable" style="height:360px; background-color:#FFFFFF;">
+				<div class="card-image">
+				  <video class="responsive-img" src="{{url_for('static',filename='video/6.mp4')}}" style="width:250px; height:200px;" controls="controls">
+				  <br><span class="card-title"><strong>Data Analysis</strong></span>
+				</div>
+				<div class="card-content">
+				  <p>Learn how to use Python with Pandas, Matplotlib, and other modules to gather insights from and about your data.</p>
+				</div>
+				<div class="card-action right-align">
+				  <a href="{{url_for('static',filename='video/6.mp4')}}" class="waves-effect waves-light btn" style="color:#000000; background-color:#FFD166">Download</a>
+				</div>
+            </div>
+            </a>
+		</div>
+	</div>
+</div>
+
+<nav aria-label="Example">
+  <ul class="pagination">
+    <li class="enabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+    <li ><a href="#">2 <span class="sr-only">(current)</span></a></li>
+    <li ><a href="#">3 <span class="sr-only">(current)</span></a></li>
+    <li ><a href="#">4 <span class="sr-only">(current)</span></a></li>
+	  <li class="enabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a></li>
+  </ul>
+</nav>
+{% endblock %}

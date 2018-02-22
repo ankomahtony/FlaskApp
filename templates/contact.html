@@ -1,0 +1,235 @@
+{% extends "headerv.html" %}
+
+{% block main %}
+<!-- main content -->
+<header class="w3-container w3-center w3-padding-48 w3-white">
+  <h1 class="w3-xxxlarge"><b>TONYJ WEBSITE</b></h1>
+  <h6>Welcome to the Data Visualisation page of <span class="w3-tag">Tonyj's world</span></h6>
+</header>
+<script>
+var data = [10,25,50,80,92];
+var r = 200;
+
+var color = d3.scale.linear()
+  .domain([0,d3.max(data)])
+  .range(["red","blue"])
+
+var canvas = d3.select("body").append("svg")
+  .attr({
+    width: 700,
+    height: 500
+  });
+
+var group = canvas.append("g")
+  .attr("transform", "translate(250,200)");
+
+var arc = d3.svg.arc()
+  .innerRadius(50)
+  .outerRadius(r);
+
+var pie = d3.layout.pie()
+  .value(function(d){ return d;});
+
+var arcs = group.selectAll(".arc")
+  .data(pie(data))
+  .enter()
+  .append("g")
+  .attr("class", "arc");
+
+arcs.append("path")
+  .attr("d",arc)
+  .attr("fill",function(d){ return color(d.data);});
+
+arcs.append("text")
+  .attr("transform", function(d){ return "translate("+ arc.centroid(d) + ")";})
+  .attr("text-anchor","middle")
+  .attr("font-size","1.0em")
+  .text(function(d){ return d.data; })
+
+</script>
+<script>
+  var w = 500,
+    h = 500,
+    margin = { top: 40, right: 20, bottom: 20, left: 40 },
+    radius = 6;
+
+svg = d3.select("body").append("svg").attr({
+    width: w,
+    height: h
+});
+
+var dataset = [
+  { x: 100, y: 110 },
+  { x: 83, y: 43 },
+  { x: 92, y: 28 },
+  { x: 49, y: 74 },
+  { x: 51, y: 10 },
+  { x: 25, y: 98 },
+  { x: 77, y: 30 },
+  { x: 20, y: 83 },
+  { x: 11, y: 63 },
+  { x: 4, y: 55 },
+  { x: 0, y: 0 },
+  { x: 85, y: 100 },
+  { x: 60, y: 40 },
+  { x: 70, y: 80 },
+  { x: 10, y: 20 },
+  { x: 40, y: 50 },
+  { x: 25, y: 31 }
+];
+
+var xScale = d3.scale.linear()
+  .domain([0, d3.max(dataset, function (d) {return d.x;}) + 10])
+  .range([margin.left, w - margin.right]);
+
+  var yScale = d3.scale.linear()
+    .domain([0, d3.max(dataset, function (d) {return d.y;}) + 10])
+    .range([margin.top, h - margin.bottom]);
+
+var xAxis = d3.svg.axis().scale(xScale).orient("top");
+var yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+var circleInitAttrs = {
+  cx: xScale(0),
+  cy: yScale(0),
+  r: 1,
+  fill: "green"
+};
+
+var circleAttrs = {
+  cx: function(d){ return xScale(d.x);},
+  cy: function(d){ return yScale(d.y);},
+  r: radius,
+  fill: "green"
+};
+
+var xAxisGroup = svg.append("g").attr({
+  "class": "axis",
+  transform: "translate(" + [0,margin.top] +")"
+}).call(xAxis);
+
+var yAxisGroup = svg.append("g").attr({
+  "class": "axis",
+  transform: "translate(" + [margin.left,0] +")"
+}).call(yAxis);
+
+function handleMouseOver (d, i) {
+  d3.select(this).attr({
+    fill:"orange",
+    r: radius
+  });
+  svg.append("text")
+      .attr({
+          id: "t" + d.x + "-" + d.y + "-" + i,
+          x: function(){ return xScale(d.x) - 30;},
+          y: function(){ return yScale(d.y) - 15;}
+        })
+        .text(function (){
+          return [d.x, d.y];
+        });
+}
+function handleMouseOut (d, i){
+    d3.select(this).attr({
+      fill:"green",
+      r: radius
+      });
+      d3.select("#t" + d.x + "-" + d.y + "-" + i).remove();
+}
+
+var circles = svg.selectAll("circle")
+    .data(dataset)
+    .enter()
+    .append("circle")
+    .attr(circleInitAttrs)
+    .on("mouseover", handleMouseOver)
+    .on("mouseout", handleMouseOut);
+
+    circles.transition()
+        .delay(function(d,i){
+          return i*100;
+        })
+        .duration(1000)
+        .attr(circleAttrs);
+
+    svg.on("click", function (){
+        var coords = d3.mouse(this);
+
+        var newDataset = {
+          x: Math.round(xScale.invert(coords[0])),
+          y: Math.round(yScale.invert(coords[1]))
+        };
+
+        dataset.push(newDataset);
+
+        xScale.domain([0, d3.max(dataset, function (d) { return d.x; }) + 10]);
+        yScale.domain([0, d3.max(dataset, function (d) { return d.y; }) + 10]);
+
+        xAxisGroup.transition().call(xAxis);
+        yAxisGroup.transition().call(yAxis);
+
+      var c =  svg.selectAll("circle").data(dataset)
+      c.transition()
+        .ease("elastic")
+        .attr(circleAttrs)
+      c.enter()
+      .append("circle")
+      .attr(circleInitAttrs)
+      .on("mouseover", handleMouseOver)
+      .on("mouseout", handleMouseOut);
+
+      c.transition()
+          .duration(2000)
+          .attr(circleAttrs);
+    });
+
+</script>
+{% endblock %}
+
+
+{% block portfolio %}
+
+<div class="w3-white w3-margin">
+  <div class="w3-container w3-padding w3-black">
+    <h4>Follow Me</h4>
+  </div>
+  <div class="w3-container w3-xlarge w3-padding">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  </div>
+</div>
+<hr>
+
+<!-- Subscribe -->
+<div class="w3-white w3-margin">
+  <div class="w3-container w3-padding w3-black">
+    <h4>Subscribe</h4>
+  </div>
+  <div class="w3-container w3-white">
+    <p>Enter your e-mail below and get notified on the latest blog posts.</p>
+    <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail" style="width:100%"></p>
+    <p><button type="button" onclick="document.getElementById('subscribe').style.display='block'" class="w3-button w3-block w3-red">Subscribe</button></p>
+  </div>
+</div>
+
+<!-- END About/Intro Menu -->
+
+<!-- Subscribe Modal -->
+<div id="subscribe" class="w3-modal w3-animate-opacity">
+<div class="w3-modal-content" style="padding:32px">
+<div class="w3-container w3-white">
+<i onclick="document.getElementById('subscribe').style.display='none'" class="fa fa-remove w3-transparent w3-button w3-xlarge w3-right"></i>
+<h2 class="w3-wide">SUBSCRIBE</h2>
+<p>Join my mailing list to receive updates on the latest blog posts and other things.</p>
+<p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail"></p>
+<button type="button" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('subscribe').style.display='none'">Subscribe</button>
+</div>
+</div>
+</div>
+
+<a href="#" class="w3-button w3-black w3-padding-large w3-margin-bottom"><i class="fa fa-arrow-up w3-margin-left"></i>To the top</a>
+
+{% endblock %}

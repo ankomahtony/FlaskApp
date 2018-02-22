@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+  <link href="/static/favico.ico" rel="icon">
+    <title>The Try Flasky</title>
+ <link type="text/css" rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}">
+  <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+      <script src="{{url_for('static',filename='ripples.js')}}"></script>
+  <script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+</head>
+<body>
+{% extends "footer.html" %}
+{% block header %}
+<link type="text/css" rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+<header class="bs-docs-nav navbar navbar-static-top" id="top">
+    <div class="container">
+      <div class="navbar-header" style="color:#4021AD;">
+        <button aria-controls="bs-navbar" aria-expanded="false" class="collapsed navbar-toggle" data-target="#bs-navbar" data-toggle="collapse" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a href="/" class="navbar-brand"><h4>TONY J</h4></a>
+      </div>
+      <nav class="collapse navbar-collapse" id="bs-navbar">
+        <ul class="nav navbar-nav">
+          <li> <a href="/">Home</a></li>
+          <li> <a href="#">About Us</a></li>
+          <li> <a href="#">Location</a></li>
+          <li> <a href="#">Contact Us</a></li>
+          <li> <a href="/videos/">Videos</a></li>
+            <li>
+                <form class="form-inline" role="search">
+            <div class="form-group">
+             <input type="text" class="form-control" placeholder="Search" style="margin-top:10px;">
+             <button type="submit" class="btn btn-primary" style="margin-top:-8px;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+             </button>
+            </div>
+        </form>
+            </li>
+        </ul>
+
+         <ul class="nav navbar-nav navbar-right">
+          <li><a href="/register/" onclick="ga(&quot;send&quot;,&quot;event&quot;,&quot;Navbar&quot;,&quot;Community links&quot;,&quot;Themes&quot;)">Sign Up</a></li>
+          <li><a href="/login/" onclick="ga(&quot;send&quot;,&quot;event&quot;,&quot;Navbar&quot;,&quot;Community links&quot;,&quot;Jobs&quot;)">Log in</a></li>
+        </ul>
+      </nav>
+    </div>
+</header>
+{% endblock %}
+
+</body>
+</html>
